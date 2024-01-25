@@ -24,6 +24,10 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -61,18 +65,20 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cpsa-jwt-maker:build"
+            "buildTarget": "cpsa-jwt-maker:build",
+            "port":9999,
+            "host":"0.0.0.0"
           },
           "configurations": {
             "production": {
-              "browserTarget": "cpsa-jwt-maker:build:production"
+              "buildTarget": "cpsa-jwt-maker:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cpsa-jwt-maker:build"
+            "buildTarget": "cpsa-jwt-maker:build"
           }
         },
         "test": {
@@ -87,6 +93,10 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -120,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "cpsa-jwt-maker"
+  
+  "cli": {
+    "analytics": false
+  }
 }
