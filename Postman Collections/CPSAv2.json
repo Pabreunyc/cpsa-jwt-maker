@@ -1,0 +1,767 @@
+{
+	"info": {
+		"_postman_id": "131e16fd-b84b-46b2-b5b6-ea76c5f238b5",
+		"name": "CPSA - Dashboard",
+		"description": "Reports on project status, times and costs through Planning/Proposal, Design, Procurement and Construction.\n\nRequests use the POST method with the following body, in general:\n\n- **dashboard_type**: string, case-insensitive\n- **report_type**: number, 1-3\n- **design_unit**: string, case insensitive\n- **fiscal_year**: number, 4 digit year\n    \n\ndashboard_type: plan, design, procurement, construction\n\n### H3 Prerequisite\n\nUse the [Authenticate](https://warped-meteor-550641.postman.co/workspace/Team-Workspace~287ea795-e539-4888-8c5d-04e1c04938c7/request/23326959-8ba50e92-3fa5-4f0a-a757-d2e255535d1f?ctx=documentation) API call to get a token.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "METADATA",
+			"item": [
+				{
+					"name": "Get metadata",
+					"id": "628d45b5-3a65-486d-9ab6-d1452b72dfa7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://{{url}}/capitaldashboard/meta",
+						"description": "Get last data update time & date from Unifier and FMS."
+					},
+					"response": [
+						{
+							"id": "7ea0a7ac-be2d-436a-bf6a-5f7439b65455",
+							"name": "valid (200)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://{{url}}/capitaldashboard/meta"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1914"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"77a-E9ohyP7Hodg5w68fb1Jb7E0hJZg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 18:15:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"fms_update\": \"03/10/2023\",\n    \"etl_process_date_time\": \"03/23/2023\",\n    \"timeStamp\": \"3/24/2023, 2:15:19 PM\",\n    \"pemit_list\": [\n        {\n            \"df_value\": \"1\",\n            \"df_label\": \"DOB - Dept. of Buildings\"\n        },\n        {\n            \"df_value\": \"10\",\n            \"df_label\": \"DEP - Bureau of Water Supply\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "f44e3bcc-5fe7-486b-9598-21cffc03ed0a"
+		},
+		{
+			"name": "PLANNED",
+			"item": [
+				{
+					"name": "Get Proposed",
+					"id": "99748aef-e41a-4c10-8a0d-6c29629a8c2f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dashboard_type\":\"plan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{url}}/capitaldashboard"
+					},
+					"response": [
+						{
+							"id": "e27e0eb7-f41f-4ea9-88e2-ef809644b1ec",
+							"name": "Sample Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dashboard_type\":\"plan\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://{{url}}/capitaldashboard"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "127098"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f07a-DQDFKGRh25CyK9Z9I95w1jLBx6M\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 15:35:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"project_id\": 10554,\n        \"contract_no\": \"BG-1323M\",\n        \"fms_no\": \"846 P-2TRS23A\",\n        \"project_title\": \"Brooklyn Tree-Damaged Sidewalk Reconstruction FY23 Community Boards 1, 2, 6, 7, 10-14\",\n        \"park_contract_status\": \"Proposed\",\n        \"progress_to_date\": 0,\n        \"borough\": \"Brooklyn\",\n        \"commitment_year\": \"\",\n        \"council_district\": \"\",\n        \"community_board\": \"\",\n        \"managing_design_team_unit\": \"Forestry Horticulture Natural Resources\",\n        \"managing_construction_team_unit\": \"\",\n        \"total_forecast_amount\": 450000,\n        \"total_plan_amount\": 450000,\n        \"total_registration_amount\": 0,\n        \"total_registration_amount_upto_prior_fy\": 0,\n        \"total_project_funding_amount\": 450000,\n        \"project_type\": \"Tree Planting Contract\",\n        \"project_type_check\": 0,\n        \"funding_status\": \"Fully Funded\",\n        \"funding_status_check\": 0\n    }\n]"
+						}
+					]
+				}
+			],
+			"id": "7ab6c032-9f28-430e-b0a8-d96fd90ca6f7"
+		},
+		{
+			"name": "DESIGN",
+			"item": [
+				{
+					"name": "active",
+					"id": "7e3ae6c3-531e-4e69-8e01-5619822b23f4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 1,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": \"2016\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{url}}/capitaldashboard"
+					},
+					"response": [
+						{
+							"id": "4ec14cb4-856c-4400-b098-048464fb073b",
+							"name": "valid (200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 1,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": \"2016\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://{{url}}/capitaldashboard"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "807"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"327-JnkX5UsQAuexs70Vtl4myzCXei8\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 17:15:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"project_id\": 6275,\n        \"contract_no\": \"MG-40550-117MA\",\n        \"work_order_no\": \"\",\n        \"project_title\": \"Mannahatta Park Reconstruction\",\n        \"fms_no\": \"846 SANDY3-18\",\n        \"managing_design_team_unit\": \"Manhattan\",\n        \"park_contract_status\": \"Design\",\n        \"progress_to_date\": 0.35,\n        \"total_forecast_amount\": 2900000,\n        \"total_plan_amount\": 2900000,\n        \"total_registration_amount\": 396000,\n        \"total_registration_amount_upto_prior_fy\": 396000,\n        \"total_project_funding_amount\": 3296000,\n        \"engineers_cost_estimate\": 2252984.48,\n        \"project_type\": \"Standard Project - Single Site\",\n        \"design_start_date\": \"2016-06-15T04:00:00.000Z\",\n        \"design_scheduled_completion_date\": \"2017-06-16T04:00:00.000Z\",\n        \"design_requested_completion_date\": \"2023-06-01T04:00:00.000Z\",\n        \"design_completion_date\": null,\n        \"dacd_sa_jacd_approved\": \"\",\n        \"late_project\": 99,\n        \"late_project_desc\": \"Rebid\",\n        \"fy_active_design\": 2016\n    }\n]"
+						},
+						{
+							"id": "0f9bd1cd-8234-447b-b023-cfcbb1adeadf",
+							"name": "invalid (400)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 8,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": \"2016\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://{{url}}/capitaldashboard"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "33"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21-povhDt/pfcIl/V05K6Zw65iXAcU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 17:18:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"message\": \"Incorrect paramters\"\n}"
+						}
+					]
+				},
+				{
+					"name": "forecast",
+					"id": "af3e9c83-03c6-49b4-8d28-25a6d2cafc05",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 2,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": 2020\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{url}}/capitaldashboard"
+					},
+					"response": [
+						{
+							"id": "cb0b6d48-31c8-4a5b-98f9-a4c42849361a",
+							"name": "valid (200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 2,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": 2020\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://{{url}}/capitaldashboard"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "152071"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25207-i+44QLYTlTroPkrxXy9Ua2G5Nrk\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 17:35:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"project_id\": 7859,\n        \"contract_no\": \"M004-108M\",\n        \"work_order_no\": \"\",\n        \"fms_no\": \"846 P-303ALEN\",\n        \"project_title\": \"Allen & Pike Street Malls Reconstruction\",\n        \"managing_design_team_unit\": \"Manhattan\",\n        \"park_contract_status\": \"Completed\",\n        \"total_forecast_amount\": 0,\n        \"total_plan_amount\": 0,\n        \"total_registration_amount\": 6191000,\n        \"total_registration_amount_upto_prior_fy\": 6191000,\n        \"total_project_funding_amount\": 6191000,\n        \"engineers_cost_estimate\": 6779407.89,\n        \"project_type\": \"Standard Project - Single Site\",\n        \"design_start_date\": \"2008-02-12T05:00:00.000Z\",\n        \"design_scheduled_completion_date\": \"2009-01-31T05:00:00.000Z\",\n        \"design_requested_completion_date\": \"2010-01-28T05:00:00.000Z\",\n        \"design_completion_date\": \"2010-01-28T05:00:00.000Z\",\n        \"highlight\": 0,\n        \"fy_design_completion\": 2010\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "scheduled",
+					"id": "2969d961-9d3c-4fca-8226-0a657eb82866",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 3,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": 2016\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{url}}/capitaldashboard"
+					},
+					"response": [
+						{
+							"id": "ef3d3008-4e22-42db-bffe-edd8cc2ccf57",
+							"name": "valid (200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dashboard_type\": \"design\",\r\n    \"report_type\": 3,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": 2016\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://{{url}}/capitaldashboard"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "18560"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4880-R08HqNEzTqnpyKJ08PGWgRLYFwo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 18:07:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"project_id\": 5931,\n        \"contract_no\": \"M108-113M\",\n        \"work_order_no\": \"\",\n        \"fms_no\": \"846 P-3SUTTON\",\n        \"project_title\": \"Sutton Place Park Reconstruction\",\n        \"managing_design_team_unit\": \"Manhattan\",\n        \"park_contract_status\": \"Completed\",\n        \"total_forecast_amount\": 75000,\n        \"total_project_funding_amount\": 1750000,\n        \"engineers_cost_estimate\": 1224415.54,\n        \"pending_or_over_target\": 525584.46,\n        \"total_registration_amount\": 1675000,\n        \"project_type\": \"Standard Project - Single Site\",\n        \"design_start_date\": \"2012-04-27T04:00:00.000Z\",\n        \"design_scheduled_completion_date\": \"2013-09-20T04:00:00.000Z\",\n        \"design_requested_completion_date\": \"2015-08-31T04:00:00.000Z\",\n        \"design_completion_date\": \"2015-09-08T04:00:00.000Z\",\n        \"late_project\": 95,\n        \"late_project_desc\": \"Partner Project Tracked by Parks\",\n        \"fy_design_scheduled_completion\": 2014,\n        \"fy_design_completion\": 2016,\n        \"cycle_time_day\": 1229,\n        \"qt_design_scheduled_completion\": \"Q1\",\n        \"qt_design_completion\": \"NO\"\n    }\n]"
+						}
+					]
+				}
+			],
+			"id": "ceb52926-a4bb-4c30-b332-c06c4141450f",
+			"description": "Gets reports for active stage projects including Completed, Forecast and Scheduled.\n\ndashboard_type: \"design\"\n\nreport_type: number, 1-3\n\ndesign_unit: string, case insensitive\n\nfiscal_year: number, 4 digit year"
+		},
+		{
+			"name": "PROCUREMENT",
+			"item": [
+				{
+					"name": "active",
+					"id": "b9315476-d72b-403d-8415-a9ddc7f39785",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dashboard_type\": \"procurement\",\r\n    \"report_type\": 1,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": 2019\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{url}}/capitaldashboard"
+					},
+					"response": [
+						{
+							"id": "e08f444c-8432-4d69-88e0-6d874a06a165",
+							"name": "valid (200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dashboard_type\": \"procurement\",\r\n    \"report_type\": 1,\r\n    \"design_unit\": \"Manhattan\",\r\n    \"fiscal_year\": 2019\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://{{url}}/capitaldashboard"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With,x-app-permit,Authorization, Referer"
+								},
+								{
+									"key": "Authorization",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk1NywiZmlyc3ROYW1lIjoiUGF1bCIsImxhc3ROYW1lIjoiQWJyZXUiLCJ1c2VybmFtZSI6InBhdWwuYWJyZXUiLCJlbWFpbCI6InBhdWwuYWJyZXVAcGFya3MubnljLmdvdi10ZXN0Iiwicm9sZSI6WyJBZG1pbiIsIkRhc2hib2FyZCIsIk1hcGZpbGVBZG1pbiIsIkJsdWVwcmludEFkbWluIiwiSGVscGRlc2tBZG1pbiIsIlNwcm91dCIsIlNwcm91dEFkbWluIiwiQXJjaEVuZyIsIklGQUFkbWluIiwiSUZBIiwiU0FJbnZlbnRvcnkiLCJTQUludmVudG9yeUFkbWluIiwiQ2FwaXRhbEFyY2hpdmVBZG1pbiIsIkVSVUFkbWluIl0sImlzc3VlciI6IkNhcGl0YWxfUHJvamVjdHNfU3lzdGVtX0FuYWx5c2lzIiwiaXNzIjoiQ2FwaXRhbCBTeXN0ZW0gYW5kIEFuYWx5c2lzIiwiZXhwIjoxNzAyNTcxNDM5LCJpYXQiOjE2NzExMTQwMzJ9.znd8RYrQKvfphkkr_ybd0r0mU6klvy6J6NkrAHDy-m8"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1296"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"510-YVhfXdD3U0j1B59bLvah070NAGA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Mar 2023 20:11:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"project_id\": 1004,\n        \"contract_no\": \"M353-212M\",\n        \"project_title\": \"Riverside Park South West 69th Street Transfer Bridge Reconstruction\",\n        \"fms_no\": \"846 P-3W69SB2\",\n        \"managing_design_team_unit\": \"Manhattan\",\n        \"park_contract_status\": \"Procurement\",\n        \"progress_to_date\": 0.05,\n        \"project_type\": \"Standard Project - Single Site\",\n        \"engineers_cost_estimate\": 3125670.5,\n        \"total_forecast_amount\": 3736000,\n        \"total_plan_amount\": 3736000,\n        \"total_registration_amount\": 448000,\n        \"total_registration_amount_upto_prior_fy\": 448000,\n        \"total_project_funding_amount\": 4184000,\n        \"pca_award_amount\": 0,\n        \"design_start_date\": \"2015-03-13T04:00:00.000Z\",\n        \"design_completion_date\": \"2019-05-24T04:00:00.000Z\",\n        \"mapfile_approval_date\": \"2019-05-24T04:00:00.000Z\",\n        \"proc_scheduled_completion_date\": \"2020-02-17T05:00:00.000Z\",\n        \"proc_anticipated_completion_date\": \"2023-08-30T04:00:00.000Z\",\n        \"otw_date\": null,\n        \"comptroller_approval_date\": null,\n        \"pca_final_approval_date_by_law_office\": \"2022-12-09T05:00:00.000Z\",\n        \"pca_date_approved_by_corporation_counsel\": \"2023-03-17T04:00:00.000Z\",\n        \"cycle_time_day\": 1400,\n        \"FY_Active_Proc\": 2019,\n        \"late_project\": \"4\",\n        \"late_project_desc\": \"Missed PSCD,PACD Entered\",\n        \"pca_record_no\": \"PCA-00002\",\n        \"pca_date_submitted_for_registration\": null,\n        \"pca_initial_rfp_bid_issue_date\": null,\n        \"pca_date_of_bid_review\": null,\n        \"pca_recommendation_for_award_date\": null\n    }\n]"
+						}
+					]
+				}
+			],
+			"id": "87dac8b3-80d6-4b8b-a703-028bd3f4d30b"
+		},
+		{
+			"name": "CONSTRUCTION",
+			"item": [],
+			"id": "1d18cbc3-a033-4557-870f-cc3f997a3c48",
+			"description": "Projects in active production."
+		},
+		{
+			"name": "AuthenticateX",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d20dd0e7-e9ae-4b65-991e-4c7dac81d912",
+						"exec": [
+							"const resp = pm.response.json();\r",
+							"\r",
+							"pm.test(\"All OK\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"console.log(\"Saving token...\");\r",
+							"pm.collectionVariables.set('token', resp.rows['token']);\r",
+							"\r",
+							"let {iat, exp} = resp.rows;\r",
+							"console.log(\"Current date:\", new Date());\r",
+							"console.log(\"Issued at:\", new Date(iat * 1000));\r",
+							"console.log(\"Expiring in:\", new Date(exp * 1000));\r",
+							"\r",
+							"console.log(pm.info.requestId, \"--\", pm.info.requestName);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "8ba50e92-3fa5-4f0a-a757-d2e255535d1f",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/authenticate",
+				"description": "Get a JWT to use in other calls requiring an Authentication token.\n\nThe generated token is stored in the `token` Collections variable automatically."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "ff6b7500-88fe-4092-b003-673c7689d762",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/fiscalyear"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4540b612-a73e-4196-988d-ca64a6e6a572",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d6a01764-94e1-42fd-a73a-03d7c893ec9a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": "paul.abreu",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "666",
+			"type": "string"
+		}
+	]
+}
