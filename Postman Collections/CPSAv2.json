@@ -185,7 +185,38 @@
 					]
 				}
 			],
-			"id": "7ab6c032-9f28-430e-b0a8-d96fd90ca6f7"
+			"id": "7ab6c032-9f28-430e-b0a8-d96fd90ca6f7",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5eb244f6-187a-4beb-9762-efaf8ce2fad1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "df5fc0ec-76cb-4a59-80af-b31dd713dfab",
+						"type": "text/javascript",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"console.log(pm.info);",
+							"",
+							"pm.test(\"Success\", function() {",
+							"    pm.expect.",
+							"}",
+							"",
+							")",
+							""
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "DESIGN",
@@ -703,6 +734,30 @@
 		},
 		{
 			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "168ec63b-0615-405b-b777-5941f3264ce2",
+						"exec": [
+							"console.log(\"Token available:\", pm.collectionVariables.get(\"token\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7e3d2334-cfa4-4ce4-bfc3-a0036010f09e",
+						"exec": [
+							"const resp = pm.response.json();\r",
+							"\r",
+							"console.log( resp.info);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"id": "ff6b7500-88fe-4092-b003-673c7689d762",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
