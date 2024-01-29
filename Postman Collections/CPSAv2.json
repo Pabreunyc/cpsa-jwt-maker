@@ -809,7 +809,7 @@
 						}
 					],
 					"id": "327f0365-52ec-443f-bb59-683f016e7f43",
-					"description": "Main helpdesk API calls\n\nStartFragment\n\n| `   | Syntax | Description |   | ----------- | ----------- |   | Header | Title |   | Paragraph | Text |` |\n\nEndFragment"
+					"description": "Main helpdesk API calls\n\n\n| Endpoint | Method | Description |\n| ----------- | ----- |----------- |\n| /tickets | GET | Get all tickets |\n| Paragraph | GET |Text |"
 				}
 			],
 			"id": "e9e03629-e1e8-4128-857d-d0ebb2defc87"
