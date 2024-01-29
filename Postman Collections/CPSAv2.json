@@ -758,8 +758,15 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDYXBpdGFsX1Byb2plY3RzX1N5c3RlbV9BbmFseXNpcyIsImlhdCI6MTcwNjU0NDAwMCwiZXhwIjoxNzM4MTY2NDAwLCJhdWQiOiIiLCJzdWIiOiIiLCJpZCI6IjE5NTciLCJmaXJzdE5hbWUiOiJQYXVsIiwibGFzdE5hbWUiOiJBYnJldSIsImVtYWlsIjoicGF1bC5hYnJldUBwYXJrcy5ueWMuZ292Iiwicm9sZSI6IkFkbWluLERhc2hib2FyZCxEYXNoYm9hcmRBZG1pbixNYXBmaWxlQWRtaW4sQmx1ZXByaW50LEhlbHBkZXNrLEhlbHBkZXNrQWRtaW4sU3Agcm91dCxBcmNoRW5nLElGQUFkbWluLE9NQkFkbWluLFNBSW52ZW50b3J5LFNBSW52ZW50b3J5QWRtaW4sQ2FwaXRhbEFyY2hpdmUsTWFudWEgbExpYnJhcnlBZG1pbixDUE1XT0FwcHJvdmVyIn0.jmbYmZRn2DCTxkKXqF-7DlDjaU_58V_s2Sy21IBFRvQ"
+									}
+								},
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "http://localhost:8080/adminv3/roles/getRolesByRoleTemplate/"
 							},
 							"response": []
 						}
@@ -778,7 +785,8 @@
 									"script": {
 										"id": "168ec63b-0615-405b-b777-5941f3264ce2",
 										"exec": [
-											"console.log(\"Token available:\", pm.collectionVariables.get(\"token\"));"
+											"console.clear();\r",
+											"console.log(\"Token available.1:\", pm.collectionVariables.get(\"token\"));"
 										],
 										"type": "text/javascript"
 									}
@@ -801,9 +809,35 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDYXBpdGFsX1Byb2plY3RzX1N5c3RlbV9BbmFseXNpcyIsImlhdCI6MTcwNjU0NDAwMCwiZXhwIjoxNzM4MTY2NDAwLCJhdWQiOiIiLCJzdWIiOiIiLCJpZCI6IjE5NTciLCJmaXJzdE5hbWUiOiJQYXVsIiwibGFzdE5hbWUiOiJBYnJldSIsImVtYWlsIjoicGF1bC5hYnJldUBwYXJrcy5ueWMuZ292Iiwicm9sZSI6IkFkbWluLERhc2hib2FyZCxEYXNoYm9hcmRBZG1pbixNYXBmaWxlQWRtaW4sQmx1ZXByaW50LEhlbHBkZXNrLEhlbHBkZXNrQWRtaW4sU3Agcm91dCxBcmNoRW5nLElGQUFkbWluLE9NQkFkbWluLFNBSW52ZW50b3J5LFNBSW52ZW50b3J5QWRtaW4sQ2FwaXRhbEFyY2hpdmUsTWFudWEgbExpYnJhcnlBZG1pbixDUE1XT0FwcHJvdmVyIn0.jmbYmZRn2DCTxkKXqF-7DlDjaU_58V_s2Sy21IBFRvQ"
+									}
+								},
 								"method": "GET",
 								"header": [],
-								"url": "http://localhost:8080/fiscalyear"
+								"url": {
+									"raw": "http://localhost:8080/helpdeskv2/tickets/categoryId/userId/daysOld?",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"helpdeskv2",
+										"tickets",
+										"categoryId",
+										"userId",
+										"daysOld"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
 							},
 							"response": []
 						}
