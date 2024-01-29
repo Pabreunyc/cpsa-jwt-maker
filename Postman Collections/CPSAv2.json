@@ -747,7 +747,26 @@
 		},
 		{
 			"name": "Helpdesk",
-			"item": [],
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "getRolesByRoleTemplate",
+							"id": "b5b50f4b-a7d4-4f53-84aa-8ad7c911aea2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "ba9dac2b-25d7-4477-8789-df0abdcf81d1"
+				}
+			],
 			"id": "e9e03629-e1e8-4128-857d-d0ebb2defc87"
 		},
 		{
