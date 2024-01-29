@@ -765,7 +765,7 @@
 						}
 					],
 					"id": "ba9dac2b-25d7-4477-8789-df0abdcf81d1",
-					"description": "These endpoints are for support but fall under the **/admin** API endpoints"
+					"description": "These endpoints are for support but fall under the **/admin** API endpoints\n\ngetRolesByRoleTemplate"
 				}
 			],
 			"id": "e9e03629-e1e8-4128-857d-d0ebb2defc87"
