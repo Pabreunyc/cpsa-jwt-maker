@@ -7,6 +7,65 @@
 	},
 	"item": [
 		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d20dd0e7-e9ae-4b65-991e-4c7dac81d912",
+								"exec": [
+									"const resp = pm.response.json();\r",
+									"\r",
+									"pm.test(\"All OK\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"console.log(\"Saving token...\");\r",
+									"pm.collectionVariables.set('token', resp.rows['token']);\r",
+									"\r",
+									"let {iat, exp} = resp.rows;\r",
+									"console.log(\"Current date:\", new Date());\r",
+									"console.log(\"Issued at:\", new Date(iat * 1000));\r",
+									"console.log(\"Expiring in:\", new Date(exp * 1000));\r",
+									"\r",
+									"console.log(pm.info.requestId, \"--\", pm.info.requestName);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8ba50e92-3fa5-4f0a-a757-d2e255535d1f",
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true,
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/authenticate",
+						"description": "Get a JWT to use in other calls requiring an Authentication token.\n\nThe generated token is stored in the `token` Collections variable automatically."
+					},
+					"response": []
+				}
+			],
+			"id": "3b55af5b-3c92-4109-9b38-2c359273621d"
+		},
+		{
 			"name": "METADATA",
 			"item": [
 				{
@@ -678,64 +737,6 @@
 			"item": [],
 			"id": "1d18cbc3-a033-4557-870f-cc3f997a3c48",
 			"description": "Projects in active production."
-		},
-		{
-			"name": "Authentication",
-			"item": [],
-			"id": "3b55af5b-3c92-4109-9b38-2c359273621d"
-		},
-		{
-			"name": "AuthenticateX",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d20dd0e7-e9ae-4b65-991e-4c7dac81d912",
-						"exec": [
-							"const resp = pm.response.json();\r",
-							"\r",
-							"pm.test(\"All OK\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"console.log(\"Saving token...\");\r",
-							"pm.collectionVariables.set('token', resp.rows['token']);\r",
-							"\r",
-							"let {iat, exp} = resp.rows;\r",
-							"console.log(\"Current date:\", new Date());\r",
-							"console.log(\"Issued at:\", new Date(iat * 1000));\r",
-							"console.log(\"Expiring in:\", new Date(exp * 1000));\r",
-							"\r",
-							"console.log(pm.info.requestId, \"--\", pm.info.requestName);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "8ba50e92-3fa5-4f0a-a757-d2e255535d1f",
-			"protocolProfileBehavior": {
-				"followAuthorizationHeader": true,
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8080/authenticate",
-				"description": "Get a JWT to use in other calls requiring an Authentication token.\n\nThe generated token is stored in the `token` Collections variable automatically."
-			},
-			"response": []
 		},
 		{
 			"name": "New Request",
