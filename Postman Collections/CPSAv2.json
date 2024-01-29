@@ -766,46 +766,52 @@
 					],
 					"id": "ba9dac2b-25d7-4477-8789-df0abdcf81d1",
 					"description": "These endpoints are for support but fall under the **/admin** API endpoints\n\ngetRolesByRoleTemplate"
+				},
+				{
+					"name": "Helpdesk",
+					"item": [
+						{
+							"name": "Get All Tickets",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "168ec63b-0615-405b-b777-5941f3264ce2",
+										"exec": [
+											"console.log(\"Token available:\", pm.collectionVariables.get(\"token\"));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "7e3d2334-cfa4-4ce4-bfc3-a0036010f09e",
+										"exec": [
+											"const resp = pm.response.json();\r",
+											"\r",
+											"console.log( resp.info);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "ff6b7500-88fe-4092-b003-673c7689d762",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/fiscalyear"
+							},
+							"response": []
+						}
+					],
+					"id": "327f0365-52ec-443f-bb59-683f016e7f43"
 				}
 			],
 			"id": "e9e03629-e1e8-4128-857d-d0ebb2defc87"
-		},
-		{
-			"name": "New Request",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "168ec63b-0615-405b-b777-5941f3264ce2",
-						"exec": [
-							"console.log(\"Token available:\", pm.collectionVariables.get(\"token\"));"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "7e3d2334-cfa4-4ce4-bfc3-a0036010f09e",
-						"exec": [
-							"const resp = pm.response.json();\r",
-							"\r",
-							"console.log( resp.info);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "ff6b7500-88fe-4092-b003-673c7689d762",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/fiscalyear"
-			},
-			"response": []
 		}
 	],
 	"auth": {
