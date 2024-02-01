@@ -24,6 +24,7 @@
     "primeng": "^17.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.16.9/xlsx-0.16.9.tgz",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
