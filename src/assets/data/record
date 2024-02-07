@@ -1,0 +1,66 @@
+{
+    "results": [
+        {
+            "gender": "female",
+            "name": {
+                "title": "Ms",
+                "first": "Eevi",
+                "last": "Mattila"
+            },
+            "location": {
+                "street": {
+                    "number": 9747,
+                    "name": "Myllypuronkatu"
+                },
+                "city": "Parikkala",
+                "state": "North Karelia",
+                "country": "Finland",
+                "postcode": 34693,
+                "coordinates": {
+                    "latitude": "-23.2714",
+                    "longitude": "103.8152"
+                },
+                "timezone": {
+                    "offset": "-1:00",
+                    "description": "Azores, Cape Verde Islands"
+                }
+            },
+            "email": "eevi.mattila@example.com",
+            "login": {
+                "uuid": "19d6f795-4efd-41eb-9999-c406e276b7c4",
+                "username": "purplerabbit350",
+                "password": "magic32",
+                "salt": "401h6TgK",
+                "md5": "72a6a9b0068ca1303c38f81b789f61da",
+                "sha1": "caffe180387aba7c7457ff69b5da74aec7d58c34",
+                "sha256": "ac78d3cee5ef65b964efcd3e10a6d64df77ff510d65a6c14485a5ce522ae70f2"
+            },
+            "dob": {
+                "date": "1945-11-10T06:52:56.913Z",
+                "age": 78
+            },
+            "registered": {
+                "date": "2009-11-11T00:16:03.764Z",
+                "age": 14
+            },
+            "phone": "03-446-472",
+            "cell": "046-024-22-87",
+            "id": {
+                "name": "HETU",
+                "value": "NaNNA070undefined"
+            },
+            "picture": {
+                "large": "https://randomuser.me/api/portraits/women/85.jpg",
+                "medium": "https://randomuser.me/api/portraits/med/women/85.jpg",
+                "thumbnail": "https://randomuser.me/api/portraits/thumb/women/85.jpg"
+            },
+            "nat": "FI"
+        }
+    ],
+    "info": {
+        "seed": "626dd180d4939435",
+        "results": 1,
+        "page": 1,
+        "version": "1.4"
+    }
+}

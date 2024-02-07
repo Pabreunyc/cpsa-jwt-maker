@@ -1,22 +1,33 @@
 <section class="">
     <div>
-        <p-table [value]="dataSource$|async">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>E-Mail</th>
-                    <th>Phone</th>
-                </tr>
+        <p-table #dt styleClass="p-datatable-gridlines p-datatable-striped"
+            [value]="tableData.data" [columns]="tableData.cols"
+            [loading]="loading">
+            <ng-template pTemplate="caption">
+                SheetJS.Component Testing
+                <div>
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                </div>
             </ng-template>
 
-            <ng-template pTemplate="body" let-user let-index="i">
-                <td>{{i}}</td>
-                <td>{{user['name']['first'] user['name']['last'] | titlecase}}</td>
-                <td>{{user['login']['username']}}</td>
-                <td>{{user['email']}}</td>
-                <td>{{user['phone']}}</td>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width:2rem;">#</th>
+                    <th *ngFor="let col of columns">{{col.header}}</th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-user let-columns="columns" let-rowIndex="ri">
+                <tr>
+                    <td>{{ri}}</td>
+                    <td *ngFor="let col of columns">
+                        <ng-container [ngSwitch]="col['type']">
+                            <span *ngSwitchCase="'date'">{{user[col.field] | date}}</span>
+                            <span *ngSwitchDefault>{{user[col.field]}}</span>
+                        </ng-container>
+                    </td>
+                </tr>
             </ng-template>
             
             <ng-template pTemplate="emptymessage">
@@ -26,7 +37,5 @@
             </ng-template>
         </p-table>
     </div>
-    <div>
-        
-    </div>
+
 </section>
