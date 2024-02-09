@@ -14,7 +14,9 @@
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width:2rem;">#</th>
-                    <th *ngFor="let col of columns">{{col.header}}</th>
+                    <ng-container *ngIf="!col?.hiddenTableView">
+                        <th *ngFor="let col of columns">{{col.header}}</th>
+                    </ng-container>
                 </tr>
             </ng-template>
             
@@ -24,6 +26,8 @@
                     <td *ngFor="let col of columns">
                         <ng-container [ngSwitch]="col['type']">
                             <span *ngSwitchCase="'date'">{{user[col.field] | date}}</span>
+                            <span *ngSwitchCase="'percent'">{{user[col.field] | percent}}</span>
+                            <span *ngSwitchCase="'pre'" style="white-space: pre-wrap;">{{user[col.field]}}</span>
                             <span *ngSwitchDefault>{{user[col.field]}}</span>
                         </ng-container>
                     </td>

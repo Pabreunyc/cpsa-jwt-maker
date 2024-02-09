@@ -2,28 +2,34 @@ import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } fro
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { of } from 'rxjs';
-import { catchError, delay, map, tap } from 'rxjs/operators';
+import { catchError, delay, finalize, map, tap } from 'rxjs/operators';
 import { Table, TableModule } from 'primeng/table'
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
-import { AsyncPipe, TitleCasePipe, JsonPipe, CommonModule, DatePipe } from '@angular/common';
+import { AsyncPipe, TitleCasePipe, JsonPipe, CommonModule, DatePipe, PercentPipe } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 import  * as XLSX from 'xlsx';
+import { PrimeIcons } from 'primeng/api';
 
 interface TableColumn {
   field: string;
   header: string;
-  type?: string,
-  customExportHeader?: string;
+  type?: string;
+  hiddenTableView?: boolean;
+  hiddenExportView?: boolean
 };
 
 const DEFAULT_WORKBOOK_PROPS = {
   "Company": "NYC Department of Parks & Recreation"
 }
+const EXCEL_DATE_FORMAT_1 = "12/31/9999";
 
+const PIPE_IMPORTS = [AsyncPipe, JsonPipe, TitleCasePipe, DatePipe, PercentPipe];
+const PRIMENG_IMPORTS = [TableModule, ButtonModule, TooltipModule];
 @Component({
   selector: 'app-sheetjs',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, TableModule, ButtonModule, TooltipModule, AsyncPipe, JsonPipe, TitleCasePipe, DatePipe],
+  imports: [CommonModule, HttpClientModule, ...PRIMENG_IMPORTS, ...PIPE_IMPORTS],
   templateUrl: './sheetjs.component.html',
   styleUrl: './sheetjs.component.css'
 })
@@ -42,7 +48,8 @@ export class SheetjsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("SheetjsComponent{init]");
-    this._init()
+    this._init();
+    console.log(PrimeIcons.AMAZON);
   }
 
   exportCSV() {
@@ -52,27 +59,43 @@ export class SheetjsComponent implements OnInit {
     let ts = Date.now();
     let filename = this.dtRef['exportFilename'] + `_${ts}.xlsx`;
     let sheetname:any = new Date().toLocaleDateString();
-    sheetname = Date.now();
+    sheetname = Date.now().toString();
     console.log("Exporting to Excel Sheet. Using filename", ` "${filename}"`);
 
     let aoo = this.createWorksheetData();
+    console.log("aoo:", JSON.parse(JSON.stringify(aoo)));
     let widths = this.getCellWidths(aoo);
+
     const worksheet = XLSX.utils.json_to_sheet(aoo);
+
+    console.log("worksheet:", JSON.parse(JSON.stringify(worksheet)));
     if(!worksheet["!cols"]) {
       worksheet["!cols"] = widths.map(p => ({wch:p+1}));
       worksheet["!cols"][4] = {wch:11.25};
+      worksheet["!cols"][4].hidden = true;
+      worksheet["!cols"][5] = {wch:EXCEL_DATE_FORMAT_1.length};
       worksheet["!cols"][0]['level'] = 1;
-      // worksheet["!cols"][0] = {wch:18};
+      worksheet["!cols"][0] = {wch:18};
     }
     if(!worksheet["!rows"]) {
-      worksheet["!rows"] = [];
+      worksheet["!rows"] = Array(aoo.length);
       worksheet["!rows"][1] = {"hpx":30.75};
     }
+    // worksheet["C2"].z = '#,##0';
+    // worksheet["C3"].z = '"$"#,##0.00_);\\("$"#,##0.00\\)'; // Currency format
+
     console.log("worksheet:", worksheet);
     const workbook = XLSX.utils.book_new();
+/*     let workbook = { 
+      "Props":DEFAULT_WORKBOOK_PROPS,
+      "Sheets": { 'Worksheet': worksheet }, "SheetNames": ['Data']
+    }; */
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetname);
 
-    XLSX.writeFile(workbook, filename, { compression: true });
+    // "cellDates":true
+
+    let wr = XLSX.writeFile(workbook, filename, { compression: true, Props:{Author:"SheetJS"} });
+    console.log(wr);
     console.log("+++++ END +++++ END +++++");
   }
   private createWorksheetData() {
@@ -83,25 +106,30 @@ export class SheetjsComponent implements OnInit {
     ret = this.tableData.data.map( p => {
       r = {};
       this.tableData.cols.forEach(f => {
+        if( f?.hiddenExportView ) return; // ...because we're in a function (anonymous)
+
         switch(f.type) {
           case 'date': {
-            r[ f['header'] ] = new Date(p[ f['field'] ]);
-            break;
+            r[ f['header'] ] = new Date(p[ f['field'] ]); break;
+          }
+          case 'currency': {
+            r[ f['header'] ] = XLSX.SSF.format('$0.00', p[ f['field'] ]); break;
           }
           default: {
-            r[ f['header'] ] = p[ f['field'] ];
-            break;
+            r[ f['header'] ] = p[ f['field'] ]; break;
           }
         }
       });
-      r["Cell"] = p['cell'];
+      // r["Cell"] = "p['cell'];"
+      r["Cell"] = "🍔";
       return r;
     })
     console.log("createWorksheetData:", ret);
     return ret;
   }
   private getCellWidths(aoo):Array<number> {
-    let w =  Array( Object.keys(aoo[0]).length ).fill(0);
+    const dateWidth = ""
+    let w =  Array( Object.keys(aoo[0]).length ).fill(0); // # of columns
 
     for(let r of aoo) {
       let i = 0;
@@ -121,10 +149,12 @@ export class SheetjsComponent implements OnInit {
     this.tableData.cols = [
       {"header":"Name", "field":"full_name"},
       {"header":"Username", "field":"username"},
-      {"header":"Salary", "field":"salary"},
+      {"header":"Salary", "field":"salary", "type":"currency"},
       {"header":"E-mail", "field":"email"},
       {"header":"Phone", "field":"phone"},
-      {"header":"DOB", "field":"dob_date", "type":"date"}
+      {"header":"DOB", "field":"dob_date", "type":"date"},
+      {"header":"Avatar", "field":"avatar", "type":"pre", "hiddenExportView":true},
+      {"header":"Percentile", "field":"percentile", "type":"percent", "hiddenTableView":true}
     ];
 /* 
     this.http.get("/assets/data/random-users.json").subscribe({
@@ -144,29 +174,40 @@ export class SheetjsComponent implements OnInit {
       tap(console.log),
       map( d => {
         this.data = d['results'].map(p => {
-          console.log(this._getSalary())
+          p['username'] = p['login']['username'];
+          p['full_name'] = p['name']['first'] + ' ' + p['name']['last'];
+          p['dob_date'] = p['dob']['date'];
           p['salary'] = this._getSalary();
+          p['percentile'] = this._getPercentile();
+          p['avatar'] = `avatar\x0ahere`; // \x0a:line feed -- \x0d:carraige return
           return p;
         });
+        console.log("results:", d.results);
         return d['results'];
       })
     );
     // console.log(this.dataSource$);
 
-    this.dataSource$.subscribe(
-      (d:Array<any>) => {
-        d.forEach(el => {
-          el['username'] = el['login']['username'];
-          el['full_name'] = el['name']['first'] + ' ' + el['name']['last'];
-          el['dob_date'] = el['dob']['date'];
-        });
-        this.tableData.data = d;
-        this.loading = false;
-        console.log("TableData:", this.tableData);
+    this.dataSource$.subscribe({
+      next:
+        (d:Array<any>) => {
+          d.forEach(el => {
+          });
+          this.tableData.data = d;
+          this.loading = false;
+          console.log("TableData:", this.tableData);
+      },
+      error: err => console.error(err),
+      complete: () => {
+        console.log("KOMPLETE");
+        this.exportExcel();
       }
-    );
+    });
   }
-  private _getSalary() {
+  private _getSalary():number {
     return Math.ceil(Math.random() * 50_000 + 40_000);
+  }
+  private _getPercentile():number {
+    return Number( Number(Math.random()).toFixed(2) );
   }
 }
