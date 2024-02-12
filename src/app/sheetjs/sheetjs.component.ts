@@ -67,12 +67,17 @@ export class SheetjsComponent implements OnInit {
     let widths = this.getCellWidths(aoo);
 
     const worksheet = XLSX.utils.json_to_sheet(aoo);
+    let range:XLSX.Range = XLSX.utils.decode_range(worksheet["!ref"]);
 
     console.log("worksheet:", JSON.parse(JSON.stringify(worksheet)));
+    console.log("refs:", range);
+    console.log("worksheet.cols:", widths, "::", "worksheet.rows:", aoo.length);
+    // cell_set_number_format)
+
     if(!worksheet["!cols"]) {
       worksheet["!cols"] = widths.map(p => ({wch:p+1}));
       worksheet["!cols"][4] = {wch:11.25};
-      worksheet["!cols"][4].hidden = true;
+      // worksheet["!cols"][4].hidden = true;
       worksheet["!cols"][5] = {wch:EXCEL_DATE_FORMAT_1.length};
       worksheet["!cols"][0]['level'] = 1;
       worksheet["!cols"][0] = {wch:18};
@@ -81,6 +86,14 @@ export class SheetjsComponent implements OnInit {
       worksheet["!rows"] = Array(aoo.length);
       worksheet["!rows"][1] = {"hpx":30.75};
     }
+
+    worksheet[XLSX.utils.encode_cell({r:0, c:0})].z = '[Bold]';
+    for(let row = range.s.r+1; row <=range.e.r; ++row) {
+      const ref = XLSX.utils.encode_cell({ r: row, c: 2 });
+      // console.log({ref}, worksheet[ref].v, worksheet[ref].t, worksheet[ref].z);
+      worksheet[ref].z = '"$"#,##0.00_);[Red]\\("$"#,##0.00\\)';
+    }
+
     // worksheet["C2"].z = '#,##0';
     // worksheet["C3"].z = '"$"#,##0.00_);\\("$"#,##0.00\\)'; // Currency format
 
@@ -95,7 +108,7 @@ export class SheetjsComponent implements OnInit {
     // "cellDates":true
 
     let wr = XLSX.writeFile(workbook, filename, { compression: true, Props:{Author:"SheetJS"} });
-    console.log(wr);
+    // console.log(wr);
     console.log("+++++ END +++++ END +++++");
   }
   private createWorksheetData() {
@@ -113,7 +126,8 @@ export class SheetjsComponent implements OnInit {
             r[ f['header'] ] = new Date(p[ f['field'] ]); break;
           }
           case 'currency': {
-            r[ f['header'] ] = XLSX.SSF.format('$0.00', p[ f['field'] ]); break;
+            r[ f['header'] ] = p[ f['field'] ]; break;
+            // r[ f['header'] ] = XLSX.SSF.format('$0.00', p[ f['field'] ]); break;
           }
           default: {
             r[ f['header'] ] = p[ f['field'] ]; break;
@@ -121,7 +135,7 @@ export class SheetjsComponent implements OnInit {
         }
       });
       // r["Cell"] = "p['cell'];"
-      r["Cell"] = "🍔";
+      r["Cell"] = "🍔"; // 
       return r;
     })
     console.log("createWorksheetData:", ret);
@@ -129,7 +143,8 @@ export class SheetjsComponent implements OnInit {
   }
   private getCellWidths(aoo):Array<number> {
     const dateWidth = ""
-    let w =  Array( Object.keys(aoo[0]).length ).fill(0); // # of columns
+    let w = [];
+    Object.keys(aoo[0]).forEach((p,i) => w[i] = p.length);
 
     for(let r of aoo) {
       let i = 0;
@@ -144,7 +159,7 @@ export class SheetjsComponent implements OnInit {
   }
   // ==========================================================================
   private _init() {
-    console.log("_readData::");
+    console.log("_init::");
 
     this.tableData.cols = [
       {"header":"Name", "field":"full_name"},
@@ -166,7 +181,7 @@ export class SheetjsComponent implements OnInit {
     // https://randomuser.me/api/?seed=626dd180d4939435
     // "/assets/data/random-users.json"
     this.dataSource$ = this.http.get("https://randomuser.me/api/?seed=626dd180d4939435&results=10").pipe(
-      delay(1500),
+      delay(500),
       catchError(error => {
         console.error('Error fetching data:', error);
         return of([]); // return an empty array or appropriate default value
@@ -200,12 +215,13 @@ export class SheetjsComponent implements OnInit {
       error: err => console.error(err),
       complete: () => {
         console.log("KOMPLETE");
-        this.exportExcel();
+        // this.exportExcel();
       }
     });
   }
   private _getSalary():number {
-    return Math.ceil(Math.random() * 50_000 + 40_000);
+    let sign = Math.random() < .5 ? -1 : 1;
+    return sign * Math.ceil(Math.random() * 50_000 + 40_000);
   }
   private _getPercentile():number {
     return Number( Number(Math.random()).toFixed(2) );
