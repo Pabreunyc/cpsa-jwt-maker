@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { ButtonModule } from 'primeng/button';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { EntryComponent } from './entry/entry.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    EntryComponent,
   ],
   imports: [
     BrowserModule,

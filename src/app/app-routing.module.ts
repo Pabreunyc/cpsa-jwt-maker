@@ -5,8 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { YyzComponent } from './yyz/yyz.component';
 import { SheetjsComponent } from './sheetjs/sheetjs.component';
+import { EntryComponent } from './entry/entry.component';
 
 const routes:Routes = [
+  { path: "entry", component:EntryComponent },
   { path: "yyz", component:YyzComponent },
   { path:"xls", component:SheetjsComponent }
 

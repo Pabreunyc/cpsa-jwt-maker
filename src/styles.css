@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.border-black {
+  border: 1px solid black !important;
+}
+.border-lightgray {
+  border: 1px solid lightgray !important;
+}
+.border-red {
+  border: 1px solid red !important;
+}
+
+.st {
+  line-height: normal;
+}

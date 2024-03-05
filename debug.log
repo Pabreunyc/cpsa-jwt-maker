@@ -1,0 +1,3 @@
+[0229/143227.197:ERROR:registration_protocol_win.cc(112)] WaitNamedPipe: The system cannot find the file specified. (0x2)
+[0229/143330.629:ERROR:registration_protocol_win.cc(107)] CreateFile: The system cannot find the file specified. (0x2)
+[0229/143330.823:ERROR:registration_protocol_win.cc(107)] CreateFile: The system cannot find the file specified. (0x2)

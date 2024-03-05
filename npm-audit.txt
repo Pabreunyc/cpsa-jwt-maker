@@ -1,0 +1,27 @@
+# npm audit report
+
+vite  5.0.0 - 5.0.11
+Severity: high
+Vite dev server option `server.fs.deny` can be bypassed when hosted on case-insensitive filesystem - https://github.com/advisories/GHSA-c24v-8rfc-w8vw
+fix available via `npm audit fix`
+node_modules/@angular-devkit/build-angular/node_modules/vite
+  @angular-devkit/build-angular  17.1.0-next.0 - 17.1.0
+  Depends on vulnerable versions of vite
+  node_modules/@angular-devkit/build-angular
+
+xlsx  *
+Severity: high
+Denial of Service in SheetJS Pro - https://github.com/advisories/GHSA-g973-978j-2c3p
+Denial of Service in SheetJS Pro - https://github.com/advisories/GHSA-3x9f-74h4-2fqr
+Denial of Service in SheetsJS Pro - https://github.com/advisories/GHSA-8vcr-vxm8-293m
+Prototype Pollution in sheetJS - https://github.com/advisories/GHSA-4r6h-8v6p-xvw6
+No fix available
+node_modules/xlsx
+
+3 high severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+Some issues need review, and may require choosing
+a different dependency.

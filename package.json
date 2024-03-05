@@ -2,6 +2,7 @@
   "name": "cpsa-jwt-maker",
   "version": "0.0.0",
   "scripts": {
+    "node": "capture-output.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -19,7 +20,7 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
-    "primeflex": "^3.3.1",
+    "primeflex": "^2.0.0",
     "primeicons": "^6.0.1",
     "primeng": "^17.4.0",
     "rxjs": "~7.8.0",
